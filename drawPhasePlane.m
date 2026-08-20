@@ -24,7 +24,10 @@ function drawPhasePlane(ax, p, xmax, ymax)
     G = @(C,M) -U(M).*S(C,M)./(1 + C.*U_prime(M));
 
     % grid for vector field
-    [C_grid,M_grid] = meshgrid(linspace(0,xmax,20), linspace(0,ymax,20));
+    spacing = 0.3;
+    nC = round(xmax/spacing) + 1;
+    nM = round(ymax/spacing) + 1;
+    [C_grid,M_grid] = meshgrid(linspace(0,xmax,nC), linspace(0,ymax,nM));
 
     % evaluate vector field
     dC = F(C_grid,M_grid);
