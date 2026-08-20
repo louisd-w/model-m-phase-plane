@@ -67,6 +67,12 @@ function drawPhasePlane(ax, p, xmax, ymax)
     grid(ax, 'on')
     title(ax, 'Click initial position for a trajectory')
 
+    % make phase plane respond reliably to clicks
+    ax.HitTest = 'on';
+    ax.PickableParts = 'all';
+    disableDefaultInteractivity(ax)
+    ax.Toolbar = [];
+
 end
 
 
