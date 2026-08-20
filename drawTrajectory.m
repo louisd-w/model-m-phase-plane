@@ -24,7 +24,7 @@ function drawTrajectory(ax, p, C0, M0)
     G = @(C,M) -U(M).*S(C,M)./(1 + C.*U_prime(M));
 
     % time interval for each trajectory
-    T = linspace(0,1000,1000);
+    T = linspace(0,100,5000);
 
     % solve from clicked point, x = (C,M)
     x0 = [C0; M0];
