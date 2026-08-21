@@ -23,11 +23,16 @@ function drawPhasePlane(ax, p, xmax, ymax)
     F = @(C,M) S(C,M);
     G = @(C,M) -U(M).*S(C,M)./(1 + C.*U_prime(M));
 
-    % grid for vector field
+    % grid for vector field, with arrows from centre of grid points
     spacing = 0.3;
-    nC = round(xmax/spacing) + 1;
-    nM = round(ymax/spacing) + 1;
-    [C_grid,M_grid] = meshgrid(linspace(0,xmax,nC), linspace(0,ymax,nM));
+    nC = round(xmax/spacing);
+    nM = round(ymax/spacing);
+    dC = xmax/nC;
+    dM = ymax/nM;
+    C_vals = linspace(dC/2, xmax-dC/2, nC);
+    M_vals = linspace(dM/2, ymax-dM/2, nM);
+
+[C_grid,M_grid] = meshgrid(C_vals,M_vals);
 
     % evaluate vector field
     dC = F(C_grid,M_grid);
@@ -39,8 +44,7 @@ function drawPhasePlane(ax, p, xmax, ymax)
     dC = dC ./ L;
     dM = dM ./ L;
 
-    % clear plot
-    cla(ax)
+ 
     hold(ax, 'on')
 
     % vector field
@@ -60,15 +64,6 @@ function drawPhasePlane(ax, p, xmax, ymax)
     % legend
     lgd = legend(ax, [f1 f2], {'$\dot{C}=0$', '$\dot{M}=0$'}, 'Interpreter', 'latex', 'Location', 'northeast');
     lgd.AutoUpdate = 'off';
-
-    % labeling and sizing plot
-    xlabel(ax, 'C')
-    ylabel(ax, 'M')
-    xlim(ax, [0 xmax])
-    ylim(ax, [0 ymax])
-    daspect(ax, [1 1 1]) % keep axis in proportion
-    grid(ax, 'on')
-    title(ax, 'Click initial position for a trajectory')
 
     % make phase plane respond reliably to clicks
     ax.HitTest = 'on';
